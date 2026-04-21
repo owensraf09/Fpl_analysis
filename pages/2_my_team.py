@@ -5,11 +5,201 @@ from data import df, teams, positions
 
 st.set_page_config(page_title="My Team | FPL Dashboard", layout="wide")
 
+st.markdown("""
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap');
+
+/* ── Root tokens ── */
+:root {
+    --pl-purple:   #37003c;
+    --pl-gold:     #e8a730;
+    --pl-green:    #00ff85;
+    --pl-white:    #f0eef2;
+    --pl-muted:    #9b8fa0;
+    --pl-card-bg:  #4a1a52;
+    --pl-border:   #6b2d75;
+    --pl-hover:    #5c2264;
+}
+
+/* ── Global reset ── */
+html, body, [class*="css"] {
+    font-family: 'Barlow', sans-serif;
+    color: var(--pl-white);
+}
+
+.stApp {
+    background-color: var(--pl-purple);
+    background-image:
+        radial-gradient(ellipse at 0% 0%, rgba(232,167,48,0.07) 0%, transparent 55%),
+        radial-gradient(ellipse at 100% 100%, rgba(0,255,133,0.05) 0%, transparent 55%);
+}
+
+/* ── Top bar ── */
+header[data-testid="stHeader"] {
+    background-color: var(--pl-purple);
+    border-bottom: 2px solid var(--pl-gold);
+}
+
+/* ── Sidebar ── */
+section[data-testid="stSidebar"] {
+    background-color: #2a0030;
+    border-right: 1px solid var(--pl-border);
+}
+section[data-testid="stSidebar"] * {
+    color: var(--pl-white) !important;
+}
+
+/* ── Headings ── */
+h1 {
+    font-family: 'Barlow Condensed', sans-serif !important;
+    font-weight: 800 !important;
+    font-size: 2.8rem !important;
+    letter-spacing: 0.04em !important;
+    text-transform: uppercase !important;
+    color: var(--pl-white) !important;
+    border-left: 5px solid var(--pl-gold);
+    padding-left: 1rem;
+    margin-bottom: 0.25rem !important;
+}
+
+h2, h3 {
+    font-family: 'Barlow Condensed', sans-serif !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.06em !important;
+    color: var(--pl-white) !important;
+}
+
+h3::after {
+    content: '';
+    display: block;
+    width: 3rem;
+    height: 3px;
+    background: var(--pl-gold);
+    margin-top: 0.4rem;
+    border-radius: 2px;
+}
+
+p, .stMarkdown p {
+    color: var(--pl-muted) !important;
+    font-size: 0.95rem;
+}
+
+/* ── Divider ── */
+hr {
+    border: none !important;
+    border-top: 1px solid var(--pl-border) !important;
+    margin: 1.5rem 0 !important;
+}
+
+/* ── Metric cards ── */
+[data-testid="stMetric"] {
+    background: var(--pl-card-bg);
+    border: 1px solid var(--pl-border);
+    border-top: 3px solid var(--pl-gold);
+    border-radius: 6px;
+    padding: 1.1rem 1.2rem !important;
+    transition: background 0.2s;
+}
+[data-testid="stMetric"]:hover {
+    background: var(--pl-hover);
+}
+
+[data-testid="stMetricLabel"] {
+    font-family: 'Barlow Condensed', sans-serif !important;
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
+    color: var(--pl-muted) !important;
+}
+
+[data-testid="stMetricValue"] {
+    font-family: 'Barlow Condensed', sans-serif !important;
+    font-size: 2rem !important;
+    font-weight: 800 !important;
+    color: var(--pl-white) !important;
+}
+
+[data-testid="stMetricDelta"] {
+    font-family: 'Barlow', sans-serif !important;
+    font-size: 0.85rem !important;
+    color: var(--pl-green) !important;
+}
+
+/* ── Number input ── */
+[data-testid="stNumberInput"] input,
+input[type="number"] {
+    background-color: var(--pl-card-bg) !important;
+    border: 1px solid var(--pl-border) !important;
+    border-radius: 4px !important;
+    color: var(--pl-white) !important;
+    font-family: 'Barlow', sans-serif !important;
+}
+[data-testid="stNumberInput"] label {
+    font-family: 'Barlow Condensed', sans-serif !important;
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
+    color: var(--pl-muted) !important;
+}
+
+/* ── Alert / info boxes ── */
+[data-testid="stAlert"] {
+    background-color: var(--pl-card-bg) !important;
+    border: 1px solid var(--pl-gold) !important;
+    border-left: 4px solid var(--pl-gold) !important;
+    border-radius: 6px !important;
+    color: var(--pl-white) !important;
+}
+[data-testid="stAlert"] p {
+    color: var(--pl-white) !important;
+}
+
+/* ── DataFrames ── */
+[data-testid="stDataFrame"],
+iframe {
+    border: 1px solid var(--pl-border) !important;
+    border-radius: 6px !important;
+    overflow: hidden !important;
+}
+
+/* ── Bar/line charts ── */
+[data-testid="stVegaLiteChart"],
+[data-testid="stArrowVegaLiteChart"] {
+    background: var(--pl-card-bg) !important;
+    border: 1px solid var(--pl-border) !important;
+    border-radius: 6px !important;
+    padding: 0.75rem;
+}
+
+/* ── Spinner ── */
+.stSpinner > div {
+    border-top-color: var(--pl-gold) !important;
+}
+
+/* ── Caption / small text ── */
+[data-testid="stCaptionContainer"] p,
+small {
+    color: var(--pl-muted) !important;
+    font-size: 0.8rem !important;
+    letter-spacing: 0.03em;
+}
+
+/* ── Inline bold in markdown ── */
+strong {
+    color: var(--pl-white) !important;
+    font-weight: 600 !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
 st.title("Team Analysis")
 st.markdown("Enter your FPL Team ID below to load your squad and get personalised insights.")
 
 st.info(
-    "💡 **Find your Team ID:** Log into the FPL website, click on your squad name, "
+    "Find your Team ID: Log into the FPL website, click on your squad name, "
     "and look at the URL — the number after `/entry/` is your Team ID.",
 )
 
@@ -49,10 +239,10 @@ if team_id:
             history_data = history_resp.json()
 
         except requests.exceptions.HTTPError:
-            st.error("❌ Team not found. Please double-check your Team ID.")
+            st.error("Team not found. Please double-check your Team ID.")
             st.stop()
         except Exception as e:
-            st.error(f"❌ Something went wrong: {e}")
+            st.error(f"Something went wrong: {e}")
             st.stop()
 
     # --- Team Header ---
@@ -64,7 +254,7 @@ if team_id:
     gw_points = team_info.get("summary_event_points")
     gw_rank = team_info.get("summary_event_rank")
 
-    st.subheader(f" {team_name}")
+    st.subheader(f"{team_name}")
     st.caption(f"Manager: {manager_name}")
 
     c1, c2, c3, c4 = st.columns(4)
@@ -76,7 +266,7 @@ if team_id:
     st.divider()
 
     # --- Squad Breakdown ---
-    st.subheader(" Current Squad")
+    st.subheader("Current Squad")
 
     picks = picks_data.get("picks", [])
     player_ids = [p["element"] for p in picks]
@@ -110,7 +300,7 @@ if team_id:
     })
 
     squad_df["Cost (£)"] = squad_df["Cost (£)"] / 10
-    squad_df["Captain"] = squad_df["id"].map(lambda x: "©" if is_captain.get(x) else ("V" if is_vice.get(x) else ""))
+    squad_df["Captain"] = squad_df["id"].map(lambda x: "C" if is_captain.get(x) else ("V" if is_vice.get(x) else ""))
     squad_df["Multiplier"] = squad_df["id"].map(multipliers)
 
     # Position order
