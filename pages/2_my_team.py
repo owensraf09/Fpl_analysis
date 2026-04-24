@@ -9,7 +9,6 @@ st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap');
 
-/* ── Root tokens ── */
 :root {
     --pl-purple:   #37003c;
     --pl-gold:     #e8a730;
@@ -21,7 +20,6 @@ st.markdown("""
     --pl-hover:    #5c2264;
 }
 
-/* ── Global reset ── */
 html, body, [class*="css"] {
     font-family: 'Barlow', sans-serif;
     color: var(--pl-white);
@@ -34,22 +32,17 @@ html, body, [class*="css"] {
         radial-gradient(ellipse at 100% 100%, rgba(0,255,133,0.05) 0%, transparent 55%);
 }
 
-/* ── Top bar ── */
 header[data-testid="stHeader"] {
     background-color: var(--pl-purple);
     border-bottom: 2px solid var(--pl-gold);
 }
 
-/* ── Sidebar ── */
 section[data-testid="stSidebar"] {
     background-color: #2a0030;
     border-right: 1px solid var(--pl-border);
 }
-section[data-testid="stSidebar"] * {
-    color: var(--pl-white) !important;
-}
+section[data-testid="stSidebar"] * { color: var(--pl-white) !important; }
 
-/* ── Headings ── */
 h1 {
     font-family: 'Barlow Condensed', sans-serif !important;
     font-weight: 800 !important;
@@ -80,19 +73,14 @@ h3::after {
     border-radius: 2px;
 }
 
-p, .stMarkdown p {
-    color: var(--pl-muted) !important;
-    font-size: 0.95rem;
-}
+p, .stMarkdown p { color: var(--pl-muted) !important; font-size: 0.95rem; }
 
-/* ── Divider ── */
 hr {
     border: none !important;
     border-top: 1px solid var(--pl-border) !important;
     margin: 1.5rem 0 !important;
 }
 
-/* ── Metric cards ── */
 [data-testid="stMetric"] {
     background: var(--pl-card-bg);
     border: 1px solid var(--pl-border);
@@ -101,9 +89,7 @@ hr {
     padding: 1.1rem 1.2rem !important;
     transition: background 0.2s;
 }
-[data-testid="stMetric"]:hover {
-    background: var(--pl-hover);
-}
+[data-testid="stMetric"]:hover { background: var(--pl-hover); }
 
 [data-testid="stMetricLabel"] {
     font-family: 'Barlow Condensed', sans-serif !important;
@@ -127,9 +113,7 @@ hr {
     color: var(--pl-green) !important;
 }
 
-/* ── Number input ── */
-[data-testid="stNumberInput"] input,
-input[type="number"] {
+[data-testid="stNumberInput"] input, input[type="number"] {
     background-color: var(--pl-card-bg) !important;
     border: 1px solid var(--pl-border) !important;
     border-radius: 4px !important;
@@ -145,7 +129,6 @@ input[type="number"] {
     color: var(--pl-muted) !important;
 }
 
-/* ── Alert / info boxes ── */
 [data-testid="stAlert"] {
     background-color: var(--pl-card-bg) !important;
     border: 1px solid var(--pl-gold) !important;
@@ -153,44 +136,63 @@ input[type="number"] {
     border-radius: 6px !important;
     color: var(--pl-white) !important;
 }
-[data-testid="stAlert"] p {
-    color: var(--pl-white) !important;
-}
+[data-testid="stAlert"] p { color: var(--pl-white) !important; }
 
-/* ── DataFrames ── */
-[data-testid="stDataFrame"],
-iframe {
+[data-testid="stDataFrame"], iframe {
     border: 1px solid var(--pl-border) !important;
     border-radius: 6px !important;
     overflow: hidden !important;
 }
 
-/* ── Bar/line charts ── */
-[data-testid="stVegaLiteChart"],
-[data-testid="stArrowVegaLiteChart"] {
+[data-testid="stVegaLiteChart"], [data-testid="stArrowVegaLiteChart"] {
     background: var(--pl-card-bg) !important;
     border: 1px solid var(--pl-border) !important;
     border-radius: 6px !important;
     padding: 0.75rem;
 }
 
-/* ── Spinner ── */
-.stSpinner > div {
-    border-top-color: var(--pl-gold) !important;
-}
+.stSpinner > div { border-top-color: var(--pl-gold) !important; }
 
-/* ── Caption / small text ── */
-[data-testid="stCaptionContainer"] p,
-small {
+[data-testid="stCaptionContainer"] p, small {
     color: var(--pl-muted) !important;
     font-size: 0.8rem !important;
     letter-spacing: 0.03em;
 }
 
-/* ── Inline bold in markdown ── */
-strong {
+strong { color: var(--pl-white) !important; font-weight: 600 !important; }
+
+[data-testid="stTextInput"] input {
+    background-color: var(--pl-card-bg) !important;
+    border: 1px solid var(--pl-border) !important;
+    border-radius: 4px !important;
     color: var(--pl-white) !important;
+    font-family: 'Barlow', sans-serif !important;
+}
+[data-testid="stTextInput"] label {
+    font-family: 'Barlow Condensed', sans-serif !important;
+    font-size: 0.8rem !important;
     font-weight: 600 !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
+    color: var(--pl-muted) !important;
+}
+
+[data-testid="stButton"] > button {
+    background-color: var(--pl-gold) !important;
+    color: var(--pl-purple) !important;
+    font-family: 'Barlow Condensed', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 1rem !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
+    border: none !important;
+    border-radius: 4px !important;
+    padding: 0.45rem 1.8rem !important;
+    transition: background 0.2s, transform 0.1s !important;
+}
+[data-testid="stButton"] > button:hover {
+    background-color: #f0b83a !important;
+    transform: translateY(-1px) !important;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -204,25 +206,27 @@ st.info(
 )
 
 # --- Team ID Input ---
-team_id = st.number_input(
+team_id_input = st.text_input(
     "Enter your FPL Team ID",
-    min_value=1,
-    step=1,
-    value=None,
-    placeholder="e.g. 1234567",
-    format="%d"
+    placeholder="e.g. 1234567"
 )
+submitted = st.button("Submit")
+
+team_id = None
+if submitted and team_id_input.strip():
+    try:
+        team_id = int(team_id_input.strip())
+    except ValueError:
+        st.error("Please enter a valid numeric Team ID.")
 
 if team_id:
     with st.spinner("Fetching your team data..."):
         try:
-            # Fetch team info
             team_url = f"https://fantasy.premierleague.com/api/entry/{int(team_id)}/"
             team_resp = requests.get(team_url)
             team_resp.raise_for_status()
             team_info = team_resp.json()
 
-            # Fetch current picks (latest GW)
             current_gw = team_info.get("current_event")
             if not current_gw:
                 st.error("No gameweek data found for this team. Have they made any transfers yet?")
@@ -275,21 +279,31 @@ if team_id:
     is_vice = {p["element"]: p["is_vice_captain"] for p in picks}
 
     squad_df = df[df["id_x"].isin(player_ids)].copy()
-    squad_df = squad_df[[
+
+    # 'form' may be suffixed to 'form_x' or 'form_y' after a DataFrame merge
+    form_col = next(
+        (c for c in ["form", "form_x", "form_y"] if c in squad_df.columns),
+        None
+    )
+
+    base_cols = [
         "id_x", "web_name", "name", "singular_name",
-        "total_points", "now_cost", "form",
+        "total_points", "now_cost",
         "goals_scored", "assists", "clean_sheets",
         "minutes", "yellow_cards", "red_cards", "selected_by_percent"
-    ]].copy()
+    ]
+    if form_col:
+        base_cols.insert(6, form_col)
 
-    squad_df = squad_df.rename(columns={
+    squad_df = squad_df[base_cols].copy()
+
+    rename_map = {
         "id_x": "id",
         "web_name": "Player",
         "name": "Team",
         "singular_name": "Position",
         "total_points": "Total Pts",
         "now_cost": "Cost (£)",
-        "form": "Form",
         "goals_scored": "Goals",
         "assists": "Assists",
         "clean_sheets": "Clean Sheets",
@@ -297,13 +311,16 @@ if team_id:
         "yellow_cards": "Yellows",
         "red_cards": "Reds",
         "selected_by_percent": "Ownership (%)"
-    })
+    }
+    if form_col:
+        rename_map[form_col] = "Form"
+
+    squad_df = squad_df.rename(columns=rename_map)
 
     squad_df["Cost (£)"] = squad_df["Cost (£)"] / 10
     squad_df["Captain"] = squad_df["id"].map(lambda x: "C" if is_captain.get(x) else ("V" if is_vice.get(x) else ""))
     squad_df["Multiplier"] = squad_df["id"].map(multipliers)
 
-    # Position order
     pos_order = {"Goalkeeper": 1, "Defender": 2, "Midfielder": 3, "Forward": 4}
     squad_df["pos_order"] = squad_df["Position"].map(pos_order)
     squad_df = squad_df.sort_values(["Multiplier", "pos_order"], ascending=[False, True])
@@ -311,15 +328,14 @@ if team_id:
     squad_df.reset_index(drop=True, inplace=True)
     squad_df.index += 1
 
-    st.dataframe(
-        squad_df,
-        use_container_width=True,
-        column_config={
-            "Cost (£)": st.column_config.NumberColumn(format="£%.1f"),
-            "Ownership (%)": st.column_config.NumberColumn(format="%.1f%%"),
-            "Form": st.column_config.NumberColumn(format="%.1f"),
-        }
-    )
+    col_config = {
+        "Cost (£)": st.column_config.NumberColumn(format="£%.1f"),
+        "Ownership (%)": st.column_config.NumberColumn(format="%.1f%%"),
+    }
+    if "Form" in squad_df.columns:
+        col_config["Form"] = st.column_config.NumberColumn(format="%.1f")
+
+    st.dataframe(squad_df, use_container_width=True, column_config=col_config)
 
     st.divider()
 
