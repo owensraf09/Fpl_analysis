@@ -3,7 +3,6 @@ import requests
 import pandas as pd
 from data import df, teams, positions
 
-st.set_page_config(page_title="My Team | FPL Dashboard", layout="wide")
 
 
 st.title("Team Analysis")

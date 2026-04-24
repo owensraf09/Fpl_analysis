@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 from data import df, top_10, tdf, total_players, avg_points, top_scorer, top_scorer_pts, most_selected, most_selected_pct
 
-st.set_page_config(page_title="FPL Dashboard", layout="wide")
 
 
 # --- Header ---
