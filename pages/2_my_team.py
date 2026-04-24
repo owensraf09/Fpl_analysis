@@ -5,197 +5,6 @@ from data import df, teams, positions
 
 st.set_page_config(page_title="My Team | FPL Dashboard", layout="wide")
 
-st.markdown("""
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap');
-
-:root {
-    --pl-purple:   #37003c;
-    --pl-gold:     #e8a730;
-    --pl-green:    #00ff85;
-    --pl-white:    #f0eef2;
-    --pl-muted:    #9b8fa0;
-    --pl-card-bg:  #4a1a52;
-    --pl-border:   #6b2d75;
-    --pl-hover:    #5c2264;
-}
-
-html, body, [class*="css"] {
-    font-family: 'Barlow', sans-serif;
-    color: var(--pl-white);
-}
-
-.stApp {
-    background-color: var(--pl-purple);
-    background-image:
-        radial-gradient(ellipse at 0% 0%, rgba(232,167,48,0.07) 0%, transparent 55%),
-        radial-gradient(ellipse at 100% 100%, rgba(0,255,133,0.05) 0%, transparent 55%);
-}
-
-header[data-testid="stHeader"] {
-    background-color: var(--pl-purple);
-    border-bottom: 2px solid var(--pl-gold);
-}
-
-section[data-testid="stSidebar"] {
-    background-color: #2a0030;
-    border-right: 1px solid var(--pl-border);
-}
-section[data-testid="stSidebar"] * { color: var(--pl-white) !important; }
-
-h1 {
-    font-family: 'Barlow Condensed', sans-serif !important;
-    font-weight: 800 !important;
-    font-size: 2.8rem !important;
-    letter-spacing: 0.04em !important;
-    text-transform: uppercase !important;
-    color: var(--pl-white) !important;
-    border-left: 5px solid var(--pl-gold);
-    padding-left: 1rem;
-    margin-bottom: 0.25rem !important;
-}
-
-h2, h3 {
-    font-family: 'Barlow Condensed', sans-serif !important;
-    font-weight: 700 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.06em !important;
-    color: var(--pl-white) !important;
-}
-
-h3::after {
-    content: '';
-    display: block;
-    width: 3rem;
-    height: 3px;
-    background: var(--pl-gold);
-    margin-top: 0.4rem;
-    border-radius: 2px;
-}
-
-p, .stMarkdown p { color: var(--pl-muted) !important; font-size: 0.95rem; }
-
-hr {
-    border: none !important;
-    border-top: 1px solid var(--pl-border) !important;
-    margin: 1.5rem 0 !important;
-}
-
-[data-testid="stMetric"] {
-    background: var(--pl-card-bg);
-    border: 1px solid var(--pl-border);
-    border-top: 3px solid var(--pl-gold);
-    border-radius: 6px;
-    padding: 1.1rem 1.2rem !important;
-    transition: background 0.2s;
-}
-[data-testid="stMetric"]:hover { background: var(--pl-hover); }
-
-[data-testid="stMetricLabel"] {
-    font-family: 'Barlow Condensed', sans-serif !important;
-    font-size: 0.75rem !important;
-    font-weight: 600 !important;
-    letter-spacing: 0.12em !important;
-    text-transform: uppercase !important;
-    color: var(--pl-muted) !important;
-}
-
-[data-testid="stMetricValue"] {
-    font-family: 'Barlow Condensed', sans-serif !important;
-    font-size: 2rem !important;
-    font-weight: 800 !important;
-    color: var(--pl-white) !important;
-}
-
-[data-testid="stMetricDelta"] {
-    font-family: 'Barlow', sans-serif !important;
-    font-size: 0.85rem !important;
-    color: var(--pl-green) !important;
-}
-
-[data-testid="stNumberInput"] input, input[type="number"] {
-    background-color: var(--pl-card-bg) !important;
-    border: 1px solid var(--pl-border) !important;
-    border-radius: 4px !important;
-    color: var(--pl-white) !important;
-    font-family: 'Barlow', sans-serif !important;
-}
-[data-testid="stNumberInput"] label {
-    font-family: 'Barlow Condensed', sans-serif !important;
-    font-size: 0.8rem !important;
-    font-weight: 600 !important;
-    letter-spacing: 0.1em !important;
-    text-transform: uppercase !important;
-    color: var(--pl-muted) !important;
-}
-
-[data-testid="stAlert"] {
-    background-color: var(--pl-card-bg) !important;
-    border: 1px solid var(--pl-gold) !important;
-    border-left: 4px solid var(--pl-gold) !important;
-    border-radius: 6px !important;
-    color: var(--pl-white) !important;
-}
-[data-testid="stAlert"] p { color: var(--pl-white) !important; }
-
-[data-testid="stDataFrame"], iframe {
-    border: 1px solid var(--pl-border) !important;
-    border-radius: 6px !important;
-    overflow: hidden !important;
-}
-
-[data-testid="stVegaLiteChart"], [data-testid="stArrowVegaLiteChart"] {
-    background: var(--pl-card-bg) !important;
-    border: 1px solid var(--pl-border) !important;
-    border-radius: 6px !important;
-    padding: 0.75rem;
-}
-
-.stSpinner > div { border-top-color: var(--pl-gold) !important; }
-
-[data-testid="stCaptionContainer"] p, small {
-    color: var(--pl-muted) !important;
-    font-size: 0.8rem !important;
-    letter-spacing: 0.03em;
-}
-
-strong { color: var(--pl-white) !important; font-weight: 600 !important; }
-
-[data-testid="stTextInput"] input {
-    background-color: var(--pl-card-bg) !important;
-    border: 1px solid var(--pl-border) !important;
-    border-radius: 4px !important;
-    color: var(--pl-white) !important;
-    font-family: 'Barlow', sans-serif !important;
-}
-[data-testid="stTextInput"] label {
-    font-family: 'Barlow Condensed', sans-serif !important;
-    font-size: 0.8rem !important;
-    font-weight: 600 !important;
-    letter-spacing: 0.1em !important;
-    text-transform: uppercase !important;
-    color: var(--pl-muted) !important;
-}
-
-[data-testid="stButton"] > button {
-    background-color: var(--pl-gold) !important;
-    color: var(--pl-purple) !important;
-    font-family: 'Barlow Condensed', sans-serif !important;
-    font-weight: 700 !important;
-    font-size: 1rem !important;
-    letter-spacing: 0.1em !important;
-    text-transform: uppercase !important;
-    border: none !important;
-    border-radius: 4px !important;
-    padding: 0.45rem 1.8rem !important;
-    transition: background 0.2s, transform 0.1s !important;
-}
-[data-testid="stButton"] > button:hover {
-    background-color: #f0b83a !important;
-    transform: translateY(-1px) !important;
-}
-</style>
-""", unsafe_allow_html=True)
 
 st.title("Team Analysis")
 st.markdown("Enter your FPL Team ID below to load your squad and get personalised insights.")
@@ -339,14 +148,6 @@ if team_id:
 
     st.divider()
 
-    # --- Points per Position ---
-    st.subheader("Points by Position")
-    pos_points = squad_df.groupby("Position")["Total Pts"].sum().reset_index()
-    pos_points = pos_points.sort_values("Total Pts", ascending=False)
-    st.bar_chart(pos_points.set_index("Position")["Total Pts"])
-
-    st.divider()
-
     # --- GW Points History ---
     st.subheader("Gameweek Points History")
     gw_history = history_data.get("current", [])
@@ -376,7 +177,38 @@ if team_id:
     st.subheader("Chips Used")
     chips = history_data.get("chips", [])
     if chips:
-        chips_df = pd.DataFrame(chips)[["name", "event"]].rename(columns={"name": "Chip", "event": "Gameweek Used"})
+        chip_names = {
+            "wildcard": "Wildcard",
+            "freehit":  "Free Hit",
+            "bboost":   "Bench Boost",
+            "3xc":      "Triple Captain",
+        }
+
+        def calc_chip_gain(chip_code, gw):
+            try:
+                gw_picks = requests.get(f"https://fantasy.premierleague.com/api/entry/{int(team_id)}/event/{gw}/picks/").json().get("picks", [])
+                pts_map = {el["id"]: el["stats"]["total_points"] for el in requests.get(f"https://fantasy.premierleague.com/api/event/{gw}/live/").json().get("elements", [])}
+
+                if chip_code == "bboost":
+                    return sum(pts_map.get(p["element"], 0) for p in gw_picks if p["position"] > 11)
+
+                if chip_code == "3xc":
+                    captain = next((p for p in gw_picks if p["is_captain"]), None)
+                    return pts_map.get(captain["element"], 0) if captain else 0
+
+            except Exception:
+                pass
+            return None
+
+        rows = []
+        for chip in chips:
+            code = chip["name"]
+            gw   = chip["event"]
+            name = chip_names.get(code, code)
+            gain = "N/A" if code in ("wildcard", "freehit") else (calc_chip_gain(code, gw) or "N/A")
+            rows.append({"Chip": name, "Gameweek Used": gw, "Points Gained": gain})
+
+        chips_df = pd.DataFrame(rows)
         st.dataframe(chips_df, use_container_width=True)
     else:
         st.info("No chips used yet this season.")
